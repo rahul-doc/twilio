@@ -1,0 +1,36 @@
+ALTER TABLE `transaction_history` ADD `commission` FLOAT( 16, 2 ) NOT NULL AFTER `amount` 
+
+ALTER TABLE `transaction_history` ADD `status` ENUM( 'On-Hold', 'Pending', 'Completed', 'Refund' ) NOT NULL 
+
+CREATE TABLE IF NOT EXISTS `keys` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `key` varchar(40) NOT NULL,
+  `level` int(2) NOT NULL,
+  `ignore_limits` tinyint(1) NOT NULL DEFAULT '0',
+  `is_private_key` tinyint(1) NOT NULL DEFAULT '0',
+  `ip_addresses` text,
+  `date_created` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+
+INSERT INTO `keys` (`id`, `key`, `level`, `ignore_limits`, `is_private_key`, `ip_addresses`, `date_created`) VALUES
+(1, 'keyAPI1234%', 1, 0, 0, NULL, 0);
+
+CREATE TABLE IF NOT EXISTS `price_list` (
+  `price_id` int(11) NOT NULL AUTO_INCREMENT,
+  `description` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `product_type` enum('consultation','device','medicine','procedure','service','other') COLLATE utf8_unicode_ci NOT NULL,
+  `product_type_other` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `acc_id` int(11) NOT NULL,
+  `provider` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `unit_price` float NOT NULL,
+  `currency` varchar(3) COLLATE utf8_unicode_ci NOT NULL,
+  `recurring_monthly` tinyint(1) NOT NULL DEFAULT '0',
+  `date_added` date NOT NULL,
+  `last_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_active` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`price_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+
